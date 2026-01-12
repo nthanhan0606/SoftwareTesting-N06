@@ -9,8 +9,8 @@ This repository is used to upload practical assignment results for the **Softwar
 * Upload screenshots to the repository
 
 ### Evidence
+- Screenshot result: [ch1-cantunsee-nguyenthanhan.png](ch1-cantunsee-nguyenthanhan.png)
 
-* Screenshot result: ch1-cantunsee-nguyenthanhan.png
 
 ✅ **Exercise 1 screenshots have been committed**
 
