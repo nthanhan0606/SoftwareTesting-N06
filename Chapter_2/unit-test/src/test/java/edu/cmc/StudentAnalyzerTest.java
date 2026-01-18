@@ -10,44 +10,46 @@ import java.util.List;
 public class StudentAnalyzerTest {
 
     @Test
-    public void testCountExcellentStudents_NormalCase() {
+    public void testMixedValidAndInvalidScores() {
         StudentAnalyzer analyzer = new StudentAnalyzer();
-
         List<Double> scores = Arrays.asList(9.0, 8.5, 7.0, 11.0, -1.0);
 
-        int result = analyzer.countExcellentStudents(scores);
-
-        assertEquals(2, result);
+        assertEquals(2, analyzer.countExcellentStudents(scores));
+        assertEquals(8.17, analyzer.calculateValidAverage(scores), 0.01);
     }
 
     @Test
-    public void testCountExcellentStudents_EmptyList() {
+    public void testAllValidScores() {
         StudentAnalyzer analyzer = new StudentAnalyzer();
+        List<Double> scores = Arrays.asList(6.0, 8.0, 9.5, 10.0);
 
-        int result = analyzer.countExcellentStudents(Collections.emptyList());
-
-        assertEquals(0, result);
+        assertEquals(3, analyzer.countExcellentStudents(scores));
+        assertEquals(8.38, analyzer.calculateValidAverage(scores), 0.01);
     }
 
     @Test
-    public void testCalculateValidAverage_NormalCase() {
+    public void testEmptyList() {
         StudentAnalyzer analyzer = new StudentAnalyzer();
 
-        List<Double> scores = Arrays.asList(9.0, 8.5, 7.0, 11.0, -1.0);
-
-        double average = analyzer.calculateValidAverage(scores);
-
-        assertEquals(8.17, average, 0.01);
+        assertEquals(0, analyzer.countExcellentStudents(Collections.emptyList()));
+        assertEquals(0, analyzer.calculateValidAverage(Collections.emptyList()), 0.01);
     }
 
     @Test
-    public void testCalculateValidAverage_AllInvalid() {
+    public void testBoundaryValuesOnly() {
         StudentAnalyzer analyzer = new StudentAnalyzer();
+        List<Double> scores = Arrays.asList(0.0, 10.0);
 
-        List<Double> scores = Arrays.asList(-2.0, 12.0);
+        assertEquals(1, analyzer.countExcellentStudents(scores));
+        assertEquals(5.0, analyzer.calculateValidAverage(scores), 0.01);
+    }
 
-        double average = analyzer.calculateValidAverage(scores);
+    @Test
+    public void testInvalidScoresOnly() {
+        StudentAnalyzer analyzer = new StudentAnalyzer();
+        List<Double> scores = Arrays.asList(-3.0, 12.0, 15.0);
 
-        assertEquals(0, average, 0.01);
+        assertEquals(0, analyzer.countExcellentStudents(scores));
+        assertEquals(0, analyzer.calculateValidAverage(scores), 0.01);
     }
 }
