@@ -1,4 +1,4 @@
-package main.java.edu.cmc;
+package edu.cmc;
 import java.util.List;
 
 public class StudentAnalyzer {
