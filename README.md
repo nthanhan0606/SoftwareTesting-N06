@@ -3,6 +3,7 @@
 This repository is used to upload practical assignment results for the **Software Testing** course.
 
 ## Table of Contents
+
 - [Chapter 1 – UI/UX Evaluation](#chapter-1--uiux-evaluation-cantunsee-space)
 - [Chapter 2: Testing Process – Unit Test](#chapter-2-testing-process--unit-test)
 
@@ -27,7 +28,7 @@ This repository is used to upload practical assignment results for the **Softwar
 
 The **StudentAnalyzer** class is used to analyze student scores with two main functionalities.
 
-**Source file:** [StudentAnalyzer.java](src/main/java/StudentAnalyzer.java)
+**Source file:** [StudentAnalyzer.java](Chapter_2/unit-test/src/main/java/edu/cmc/StudentAnalyzer.java)
 
 ### `countExcellentStudents`
 
@@ -84,7 +85,7 @@ mvn clean install
 mvn test -Dtest=StudentAnalyzerTest
 ```
 
-**Test file:** [StudentAnalyzerTest.java](src/test/java/StudentAnalyzerTest.java)
+**Test file:** [StudentAnalyzerTest.java](Chapter_2/unit-test/src/test/java/edu/cmc/StudentAnalyzerTest.java)
 
 ## Test Cases
 
@@ -105,4 +106,3 @@ mvn test -Dtest=StudentAnalyzerTest
 | Mixed valid/invalid | `[8.0, -1, 10.0, 11]` | `9.0`           | Ignores invalid scores             |
 | Empty list          | `[]`                  | `0`             | Returns 0 for empty input          |
 | All invalid         | `[-5, 15, 20]`        | `0`             | Returns 0 when no valid scores     |
-
