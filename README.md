@@ -6,6 +6,7 @@ This repository is used to upload practical assignment results for the **Softwar
 
 - [Chapter 1 – UI/UX Evaluation](#chapter-1--uiux-evaluation-cantunsee-space)
 - [Chapter 2: Testing Process – Unit Test](#chapter-2-testing-process--unit-test)
+- [Chapter 3: Testing Process – End-to-End Test](#chapter-3-testing-process--end-to-end-test-cypress)
 
 ## Chapter 1 – UI/UX Evaluation (cantunsee.space)
 
@@ -17,11 +18,6 @@ This repository is used to upload practical assignment results for the **Softwar
 
 - Screenshot result: [ch1-cantunsee-nguyenthanhan.png](Chapter_1/ch1-cantunsee-nguyenthanhan.png)
 
-## Notes
-
-- Tasks are tracked using Git issues
-- Commits follow Conventional Commit standards
-
 ## Chapter 2: Testing Process – Unit Test
 
 ### Problem Description
@@ -30,26 +26,20 @@ The **StudentAnalyzer** class is used to analyze student scores with two main fu
 
 **Source file:** [StudentAnalyzer.java](Chapter_2/unit-test/src/main/java/edu/cmc/StudentAnalyzer.java)
 
-### `countExcellentStudents`
-
-**Count excellent students**
+#### `countExcellentStudents`
 
 - Counts the number of students with scores **≥ 8.0**
 - Only processes **valid scores in the range [0, 10]**
-- Ignores scores that are **out of range** (e.g., &lt; 0 or &gt; 10)
+- Ignores scores **out of range** (< 0 or > 10)
 - Returns `0` if the list is empty or contains no valid scores
 
-### `calculateValidAverage`
-
-**Calculate valid average score**
+#### `calculateValidAverage`
 
 - Calculates the average of scores **within the range [0, 10]**
 - Ignores **invalid scores**
 - Returns `0` if **no valid scores** are present
 
----
-
-## Technologies Used
+### Technologies Used
 
 | Technology | Version          | Description                       |
 | ---------- | ---------------- | --------------------------------- |
@@ -57,52 +47,74 @@ The **StudentAnalyzer** class is used to analyze student scores with two main fu
 | Maven      | 3.9.12           | Project and dependency management |
 | JUnit      | 5.10.0 (Jupiter) | Unit testing framework            |
 
-## How to Run the Project
+### How to Run
 
-### System Requirements
-
-- Java Development Kit (JDK) **21 or higher**
-- Maven **3.9 or higher**
-
----
-
-### Clone the Repository
+**System Requirements:** JDK 21+ and Maven 3.9+
 
 ```bash
 git clone <repository-url>
 cd <repository-folder>
-```
-
-### Build the project
-
-```bash
 mvn clean install
-```
-
-### Run Specific Test Class
-
-```bash
 mvn test -Dtest=StudentAnalyzerTest
 ```
 
-**Test file:** [StudentAnalyzerTest.java](Chapter_2/unit-test/src/test/java/edu/cmc/StudentAnalyzerTest.java)
+### Test Cases
 
-## Test Cases
+| Test Case           | Input                | Expected | Description                 |
+| ------------------- | -------------------- | -------- | --------------------------- |
+| Valid scores        | `[9.5, 8.0, 7.5]`    | `2`      | Counts scores ≥ 8.0         |
+| No excellent        | `[7.0, 6.5, 5.0]`    | `0`      | No scores meet threshold    |
+| Mixed valid/invalid | `[9.0, -1, 11, 8.5]` | `2`      | Ignores out-of-range scores |
+| Empty list          | `[]`                 | `0`      | Returns 0 for empty input   |
 
-### `countExcellentStudents` Tests
+## Chapter 3: Testing Process – End-to-End Test (Cypress)
 
-| Test Case           | Input                | Expected Result | Description                 |
-| ------------------- | -------------------- | --------------- | --------------------------- |
-| Valid scores        | `[9.5, 8.0, 7.5]`    | `2`             | Counts scores ≥ 8.0         |
-| No excellent        | `[7.0, 6.5, 5.0]`    | `0`             | No scores meet threshold    |
-| Mixed valid/invalid | `[9.0, -1, 11, 8.5]` | `2`             | Ignores out-of-range scores |
-| Empty list          | `[]`                 | `0`             | Returns 0 for empty input   |
+### Overview
 
-### `calculateValidAverage` Tests
+Automated End-to-End (E2E) testing using Cypress to validate workflows on [https://www.saucedemo.com](https://www.saucedemo.com).
 
-| Test Case           | Input                 | Expected Result | Description                        |
-| ------------------- | --------------------- | --------------- | ---------------------------------- |
-| Valid scores        | `[8.0, 9.0, 10.0]`    | `9.0`           | Calculates average of valid scores |
-| Mixed valid/invalid | `[8.0, -1, 10.0, 11]` | `9.0`           | Ignores invalid scores             |
-| Empty list          | `[]`                  | `0`             | Returns 0 for empty input          |
-| All invalid         | `[-5, 15, 20]`        | `0`             | Returns 0 when no valid scores     |
+### System Requirements
+
+- Node.js 14.x or higher
+- npm (bundled with Node.js)
+- Stable internet connection
+
+### Project Setup
+
+```bash
+mkdir cypress-exercise
+cd cypress-exercise
+npm init -y
+npm install cypress --save-dev
+npx cypress open
+```
+
+### Test Scenarios
+
+| Scenario         | Objective                   | Expected Result                         | Source Code                                                                       |
+| ---------------- | --------------------------- | --------------------------------------- | --------------------------------------------------------------------------------- |
+| Successful Login | Valid credentials login     | Redirected to `/inventory.html`         | [login_spec.cy.js](Chapter_3/cypress-exercise/cypress/e2e/login_spec.cy.js)       |
+| Failed Login     | Invalid credentials         | Error message displayed                 | [login_spec.cy.js](Chapter_3/cypress-exercise/cypress/e2e/login_spec.cy.js)       |
+| Add to Cart      | Add product to cart         | Cart badge shows quantity 1             | [cart_spec.cy.js](Chapter_3/cypress-exercise/cypress/e2e/cart_spec.cy.js)         |
+| Sort Products    | Sort by price (low to high) | First product: $7.99                    | [cart_spec.cy.js](Chapter_3/cypress-exercise/cypress/e2e/cart_spec.cy.js)         |
+| Remove from Cart | Remove product              | Cart badge removed or quantity 0        | [cart_spec.cy.js](Chapter_3/cypress-exercise/cypress/e2e/cart_spec.cy.js)         |
+| Checkout         | Complete checkout workflow  | Redirected to `/checkout-step-two.html` | [checkout_spec.cy.js](Chapter_3/cypress-exercise/cypress/e2e/checkout_spec.cy.js) |
+
+### How to Run
+
+```bash
+npx cypress open
+```
+
+Select and execute: `login_spec.cy.js`, `cart_spec.cy.js`, `checkout_spec.cy.js`
+
+### Evidence
+
+- Screenshots cart_spec: [cart_spec_cypress.png](Chapter_3/cypress-exercise/cypress/Evidence/cart_spec_cypress.png)
+- Screenshots checkout_spec: [checkout_spec_cypress.png](Chapter_3/cypress-exercise/cypress/Evidence/checkout_spec_cypress.png)
+- Screenshots login_spec: [login_spec_cypress.png](Chapter_3/cypress-exercise/cypress/Evidence/login_spec_cypress.png)
+
+## Notes
+
+- Tasks tracked using Git issues
+- Commits follow Conventional Commit standards
