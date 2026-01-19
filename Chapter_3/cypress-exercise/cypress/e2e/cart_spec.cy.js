@@ -4,6 +4,8 @@ describe('Cart Test', () => {
     cy.get('#user-name').type('standard_user');
     cy.get('#password').type('secret_sauce');
     cy.get('#login-button').click();
+
+    cy.url().should('include', '/inventory.html');
   });
 
   it('Should add a product to the cart', () => {
@@ -13,5 +15,18 @@ describe('Cart Test', () => {
   it('Should sort products by price low to high', () => {
     cy.get('.product_sort_container').select('lohi');
     cy.get('.inventory_item_price').first().should('have.text', '$7.99');
+  });
+  it('Should remove product from cart successfully', () => {
+    cy.get('.inventory_item')
+      .first()
+      .find('button')
+      .contains('Add to cart')
+      .click();
+
+    cy.get('.shopping_cart_badge').should('exist').and('have.text', '1');
+
+    cy.get('.inventory_item').first().find('button').contains('Remove').click();
+
+    cy.get('.shopping_cart_badge').should('not.exist');
   });
 });
